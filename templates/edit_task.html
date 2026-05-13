@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Edit task{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <div class="mb-4">
+            <a href="{{ url_for('tasks.index') }}" class="link-secondary text-decoration-none small">← Back to tasks</a>
+            <h1 class="h3 mt-2 mb-0">Edit task</h1>
+        </div>
+        <div class="card card-elevated border-0 shadow-sm">
+            <div class="card-body p-4">
+                <form method="post" action="{{ url_for('tasks.edit_task', task_id=task.id) }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control form-control-lg" id="title" name="title"
+                               value="{{ task.title }}" required maxlength="200">
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4"
+                                  placeholder="Optional details">{{ task.description or '' }}</textarea>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Save changes</button>
+                        <a href="{{ url_for('tasks.index') }}" class="btn btn-outline-secondary rounded-pill">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

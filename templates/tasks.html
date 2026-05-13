@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}My tasks{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">My tasks</h1>
+        <p class="text-secondary mb-0">Organize tasks, track progress, and stay productive.</p>
+    </div>
+</div>
+
+<div class="card card-elevated border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <h2 class="h5 mb-3">New task</h2>
+        <form method="post" action="{{ url_for('tasks.add_task') }}" class="row g-3">
+            <div class="col-12 col-md-5">
+                <label for="title" class="form-label visually-hidden">Title</label>
+                <input type="text" class="form-control form-control-lg" id="title" name="title"
+                       placeholder="What needs to be done?" required maxlength="200">
+            </div>
+            <div class="col-12 col-md-5">
+                <label for="description" class="form-label visually-hidden">Description</label>
+                <input type="text" class="form-control" id="description" name="description"
+                       placeholder="Optional details">
+            </div>
+            <div class="col-12 col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="section-heading d-flex align-items-center justify-content-between mb-3">
+            <h2 class="h5 mb-0">Pending</h2>
+            <span class="badge text-bg-warning rounded-pill">{{ pending_tasks|length }} active</span>
+        </div>
+        {% if pending_tasks %}
+            <div class="vstack gap-3">
+                {% for task in pending_tasks %}
+                <article class="card task-card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between gap-2">
+                            <div>
+                                <h3 class="h6 mb-1">{{ task.title }}</h3>
+                                {% if task.description %}
+                                <p class="text-secondary small mb-2">{{ task.description }}</p>
+                                {% endif %}
+                                <span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Pending</span>
+                            </div>
+                            <div class="d-flex flex-column gap-1 flex-shrink-0" role="group" aria-label="Actions">
+                                <form method="post" action="{{ url_for('tasks.toggle_task', task_id=task.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-success w-100 rounded-pill" title="Mark complete">Done</button>
+                                </form>
+                                <a href="{{ url_for('tasks.edit_task', task_id=task.id) }}" class="btn btn-sm btn-outline-primary rounded-pill">Edit</a>
+                                <form method="post" action="{{ url_for('tasks.delete_task', task_id=task.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100 rounded-pill">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state card border-0 shadow-sm text-center p-5 text-secondary">
+                <p class="mb-0">No pending tasks. You are all caught up.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-6">
+        <div class="section-heading d-flex align-items-center justify-content-between mb-3">
+            <h2 class="h5 mb-0">Completed</h2>
+            <span class="badge text-bg-success rounded-pill">{{ completed_tasks|length }} done</span>
+        </div>
+        {% if completed_tasks %}
+            <div class="vstack gap-3">
+                {% for task in completed_tasks %}
+                <article class="card task-card task-card-done border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between gap-2">
+                            <div>
+                                <h3 class="h6 mb-1 text-decoration-line-through opacity-75">{{ task.title }}</h3>
+                                {% if task.description %}
+                                <p class="text-secondary small mb-2">{{ task.description }}</p>
+                                {% endif %}
+                                <span class="badge rounded-pill bg-success-subtle text-success-emphasis">Completed</span>
+                            </div>
+                            <div class="d-flex flex-column gap-1 flex-shrink-0" role="group" aria-label="Actions">
+                                <form method="post" action="{{ url_for('tasks.toggle_task', task_id=task.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary w-100 rounded-pill" title="Mark pending">Undo</button>
+                                </form>
+                                <a href="{{ url_for('tasks.edit_task', task_id=task.id) }}" class="btn btn-sm btn-outline-primary rounded-pill">Edit</a>
+                                <form method="post" action="{{ url_for('tasks.delete_task', task_id=task.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100 rounded-pill">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state card border-0 shadow-sm text-center p-5 text-secondary">
+                <p class="mb-0">No completed tasks yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

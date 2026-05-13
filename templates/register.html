@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="card card-elevated border-0 shadow-lg overflow-hidden">
+            <div class="card-header-gradient px-4 py-4">
+                <h1 class="h4 mb-0 text-white">Create account</h1>
+                <p class="mb-0 text-white-50 small">Your tasks stay private to your login</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" action="{{ url_for('auth.register') }}" novalidate>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username"
+                               required minlength="2" maxlength="80" autocomplete="username" autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password"
+                               required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirm" class="form-label">Confirm password</label>
+                        <input type="password" class="form-control form-control-lg" id="confirm" name="confirm"
+                               required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">Register</button>
+                </form>
+                <p class="text-center text-secondary mt-4 mb-0 small">
+                    Already have an account?
+                    <a href="{{ url_for('auth.login') }}" class="link-offset-2">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

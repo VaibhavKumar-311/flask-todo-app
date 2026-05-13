@@ -1,0 +1,81 @@
+:root {
+    --app-accent: #6366f1;
+    --app-accent-2: #8b5cf6;
+    --brand-shadow: 0 12px 40px rgba(99, 102, 241, 0.25);
+}
+
+[data-bs-theme="dark"] {
+    --brand-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.app-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+                radial-gradient(900px 500px at 100% 0%, rgba(139, 92, 246, 0.15), transparent 55%),
+                var(--bs-body-bg);
+}
+
+.app-main {
+    flex: 1 1 auto;
+    width: 100%;
+    padding-bottom: clamp(3rem, 12vh, 6rem);
+}
+
+.navbar-glass {
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bs-body-bg) 82%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--bs-border-color) 50%, transparent);
+}
+
+.brand-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    background: linear-gradient(135deg, var(--app-accent), var(--app-accent-2));
+    color: #fff;
+    box-shadow: var(--brand-shadow);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--app-accent), var(--app-accent-2));
+    border: none;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    filter: brightness(1.06);
+    background: linear-gradient(135deg, var(--app-accent), var(--app-accent-2));
+}
+
+.card-elevated {
+    border-radius: 1rem;
+}
+
+.card-header-gradient {
+    background: linear-gradient(135deg, var(--app-accent), var(--app-accent-2));
+}
+
+.task-card {
+    border-radius: 0.85rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.08) !important;
+}
+[data-bs-theme="dark"] .task-card:hover {
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35) !important;
+}
+
+.task-card-done {
+    opacity: 0.92;
+}
+
+.empty-state {
+    border-radius: 0.85rem;
+}
+
+.section-heading .badge {
+    font-weight: 500;
+}
